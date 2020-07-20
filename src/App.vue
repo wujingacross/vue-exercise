@@ -4,6 +4,10 @@
     <s-body />
     <validate-input :rules="rules" />
     <validate-text-area :rules="Trules" />
+    <button @click="addCount(2)">add count</button>
+    <button @click="asyncAddCount">async add count</button>
+    {{count}} {{count22}}
+    {{doubleCount}}
     <!-- <HelloWorld msg="aaa" />
     <EightQueue />-->
   </div>
@@ -19,6 +23,8 @@ import SBody from "./components/SBody";
 const ValidateInput = ValidateHoc(CustomInput);
 const ValidateTextArea = ValidateHoc(CusTextArea);
 
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
+
 export default {
   name: "App",
   components: {
@@ -27,6 +33,30 @@ export default {
     ValidateInput,
     ValidateTextArea,
     SBody
+  },
+  computed: {
+    // ...mapState(["count"]),
+    ...mapState({
+      count: state => state.count,
+      count22: state => state.count
+    }),
+    ...mapGetters(["doubleCount"])
+    // count() {
+    //   return this.$store.state.count;
+    // },
+    // doubleCount() {
+    //   return this.$store.getters.doubleCount;
+    // }
+  },
+  methods: {
+    ...mapMutations(["addCount"]),
+    ...mapActions(["asyncAddCount"])
+    // addCount() {
+    //   this.$store.commit("addCount", 3); // store的mutations中的方法名
+    // },
+    // asyncAddCount() {
+    //   this.$store.dispatch("asyncAddCount"); // store的actions中的方法名
+    // }
   },
   data() {
     return {
